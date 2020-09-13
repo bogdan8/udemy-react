@@ -14,16 +14,6 @@ const App = props => {
   const [otherState, setOtherState] = useState('some other value')
   const [showPersonsState, setShowPersonsState] = useState(false)
 
-  const switchNameHandler = (newName) => {
-    setPersonsState({
-      persons: [
-        { name: newName, age: 22 },
-        { name: 'Manu', age: 33 },
-        { name: 'Jessica', age: 25 }
-      ]
-    })
-  }
-
   const nameChangeHandler = (event) => {
     setPersonsState({
       persons: [
@@ -32,6 +22,13 @@ const App = props => {
         { name: 'Jessica', age: 24 }
       ]
     })
+  }
+
+  const deletePersonHandler = (personIndex) => {
+    let persons = personsState.persons
+
+    persons.splice(personIndex, 1)
+    setPersonsState({persons: persons})
   }
 
   const togglePersonsHandler = () => {
@@ -51,8 +48,10 @@ const App = props => {
   if (showPersonsState) {
     persons = <div>
       {
-        personsState.persons.map(person => {
+        personsState.persons.map((person, index) => {
           return <Person
+            key={index}
+            click={deletePersonHandler.bind(this)}
             name={person.name}
             age={person.age}
           />
