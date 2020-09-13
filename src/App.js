@@ -25,7 +25,8 @@ const App = props => {
   }
 
   const deletePersonHandler = (personIndex) => {
-    let persons = personsState.persons
+    // let persons = personsState.persons.slice()
+    let persons = [...personsState.persons]
 
     persons.splice(personIndex, 1)
     setPersonsState({persons: persons})
