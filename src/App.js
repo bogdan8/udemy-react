@@ -8,9 +8,7 @@ const App = props => {
       { name: 'Max', age: 22 },
       { name: 'Dan', age: 33 },
       { name: 'Jenny', age: 20 }
-    ],
-    otherState: 'some other value',
-    showPersonsState: false
+    ]
   })
 
   const [otherState, setOtherState] = useState('some other value')
@@ -52,19 +50,14 @@ const App = props => {
 
   if (showPersonsState) {
     persons = <div>
-      <Person
-        name={personsState.persons[0].name}
-        age={personsState.persons[0].age}
-      />
-      <Person
-        name={personsState.persons[1].name}
-        age={personsState.persons[0].age}
-        click={switchNameHandler.bind(this, 'Max!')}
-        change={nameChangeHandler.bind(this)}>My hobbies: Cycling</Person>
-      <Person
-        name={personsState.persons[2].name}
-        age={personsState.persons[0].age}
-      />
+      {
+        personsState.persons.map(person => {
+          return <Person
+            name={person.name}
+            age={person.age}
+          />
+        })
+      }
     </div>
   }
 
