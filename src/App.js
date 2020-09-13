@@ -48,27 +48,30 @@ const App = props => {
     cursor: 'pointer'
   }
 
+  let persons = null;
+
+  if (showPersonsState) {
+    persons = <div>
+      <Person
+        name={personsState.persons[0].name}
+        age={personsState.persons[0].age}
+      />
+      <Person
+        name={personsState.persons[1].name}
+        age={personsState.persons[0].age}
+        click={switchNameHandler.bind(this, 'Max!')}
+        change={nameChangeHandler.bind(this)}>My hobbies: Cycling</Person>
+      <Person
+        name={personsState.persons[2].name}
+        age={personsState.persons[0].age}
+      />
+    </div>
+  }
+
   return <div className="App">
     <button style={style} onClick={togglePersonsHandler}>Toggle Persons</button>
 
-    {
-      showPersonsState ?
-        <div>
-          <Person
-            name={personsState.persons[0].name}
-            age={personsState.persons[0].age}
-          />
-          <Person
-            name={personsState.persons[1].name}
-            age={personsState.persons[0].age}
-            click={switchNameHandler.bind(this, 'Max!')}
-            change={nameChangeHandler.bind(this)}>My hobbies: Cycling</Person>
-          <Person
-            name={personsState.persons[2].name}
-            age={personsState.persons[0].age}
-          />
-        </div> : null
-    }
+    {persons}
   </div>
 }
 
