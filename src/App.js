@@ -5,28 +5,33 @@ import Person from './Person/Person'
 const App = props => {
   const [personsState, setPersonsState] = useState({
     persons: [
-      { name: 'Max', age: 22 },
-      { name: 'Dan', age: 33 },
-      { name: 'Jenny', age: 20 }
+      { id: 1, name: 'Max', age: 22 },
+      { id: 2, name: 'Dan', age: 33 },
+      { id: 3, name: 'Jenny', age: 20 }
     ]
   })
 
   const [otherState, setOtherState] = useState('some other value')
   const [showPersonsState, setShowPersonsState] = useState(false)
 
-  const nameChangeHandler = (event) => {
-    setPersonsState({
-      persons: [
-        { id: 1, name: 'Max', age: 22 },
-        { id: 2, name: event.target.value, age: 33 },
-        { id: 3, name: 'Jessica', age: 24 }
-      ]
+  const nameChangeHandler = (event, id) => {
+    const personIndex = personsState.persons.findIndex(person => {
+      return person.id === id
     })
+
+    const person = {...personsState.persons[personIndex]}
+
+    person.name = event.target.value
+
+    const persons = [...personsState.persons]
+    persons[personIndex] = person;
+
+    setPersonsState({ persons: persons })
   }
 
   const deletePersonHandler = (personIndex) => {
-    // let persons = personsState.persons.slice()
-    let persons = [...personsState.persons]
+    // const persons = personsState.persons.slice()
+    const persons = [...personsState.persons]
 
     persons.splice(personIndex, 1)
     setPersonsState({persons: persons})
@@ -55,6 +60,7 @@ const App = props => {
             click={deletePersonHandler.bind(this)}
             name={person.name}
             age={person.age}
+            change={(event) => nameChangeHandler(event, person.id)}
           />
         })
       }
