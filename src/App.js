@@ -17,9 +17,9 @@ const App = props => {
   const nameChangeHandler = (event) => {
     setPersonsState({
       persons: [
-        { name: 'Max', age: 22 },
-        { name: event.target.value, age: 33 },
-        { name: 'Jessica', age: 24 }
+        { id: 1, name: 'Max', age: 22 },
+        { id: 2, name: event.target.value, age: 33 },
+        { id: 3, name: 'Jessica', age: 24 }
       ]
     })
   }
@@ -51,7 +51,7 @@ const App = props => {
       {
         personsState.persons.map((person, index) => {
           return <Person
-            key={index}
+            key={person.id}
             click={deletePersonHandler.bind(this)}
             name={person.name}
             age={person.age}
