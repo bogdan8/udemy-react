@@ -1,76 +1,41 @@
 import React, { useState } from 'react'
 import './App.css'
-import Person from './Person/Person'
+import ValidationComponent from './ValidationComponent/ValidationComponent'
+import CharComponent from './CharComponent/CharComponent'
 
 const App = props => {
-  const [personsState, setPersonsState] = useState({
-    persons: [
-      { id: 1, name: 'Max', age: 22 },
-      { id: 2, name: 'Dan', age: 33 },
-      { id: 3, name: 'Jenny', age: 20 }
-    ]
-  })
+  const [charactersValue,  setInputValueState]  = useState('')
 
-  const [otherState, setOtherState] = useState('some other value')
-  const [showPersonsState, setShowPersonsState] = useState(false)
-
-  const nameChangeHandler = (event, id) => {
-    const personIndex = personsState.persons.findIndex(person => {
-      return person.id === id
-    })
-
-    const person = {...personsState.persons[personIndex]}
-
-    person.name = event.target.value
-
-    const persons = [...personsState.persons]
-    persons[personIndex] = person;
-
-    setPersonsState({ persons: persons })
+  const updateInputLengthHandler = (e) => {
+    setInputValueState(e.target.value.split(''))
   }
 
-  const deletePersonHandler = (personIndex) => {
-    // const persons = personsState.persons.slice()
-    const persons = [...personsState.persons]
+  const deleteCharHandler = (charIndex) => {
+    const charactes = [...charactersValue]
 
-    persons.splice(personIndex, 1)
-    setPersonsState({persons: persons})
+    charactes.splice(charIndex, 1)
+
+    setInputValueState(charactes)
   }
 
-  const togglePersonsHandler = () => {
-    setShowPersonsState(!showPersonsState)
-  }
+  let charactesList = null;
 
-  const style = {
-    backgroundColor: 'white',
-    font: 'inherit',
-    border: '1px solid blue',
-    padding: '8px',
-    cursor: 'pointer'
-  }
-
-  let persons = null;
-
-  if (showPersonsState) {
-    persons = <div>
+  if (charactersValue.length) {
+    charactesList = <div>
       {
-        personsState.persons.map((person, index) => {
-          return <Person
-            key={person.id}
-            click={deletePersonHandler.bind(this)}
-            name={person.name}
-            age={person.age}
-            change={(event) => nameChangeHandler(event, person.id)}
-          />
+        charactersValue.map((char, index) => {
+          return <CharComponent key={index} char={char} click={() => deleteCharHandler(index)} />
         })
       }
     </div>
   }
 
   return <div className="App">
-    <button style={style} onClick={togglePersonsHandler}>Toggle Persons</button>
+    <input type='text' onChange={updateInputLengthHandler.bind(this)} />
 
-    {persons}
+    {charactesList}
+
+    <ValidationComponent charactersValue={charactersValue} />
   </div>
 }
 
