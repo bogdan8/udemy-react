@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import './App.css'
-import Radium, { StyleRoot } from 'radium'
 import Person from './Person/Person'
 
 const App = props => {
@@ -89,15 +88,13 @@ const App = props => {
     classes.push('bold')
   }
 
-  return <StyleRoot>
-    <div className="App">
-      <h1>Hi, I'm a React App</h1>
-      <p className={classes.join(' ')}>This is really working!</p>
-      <button style={style} onClick={togglePersonsHandler}>Toggle Persons</button>
+  return <div className="App">
+    <h1>Hi, I'm a React App</h1>
+    <p className={classes.join(' ')}>This is really working!</p>
+    <button style={style} onClick={togglePersonsHandler}>Toggle Persons</button>
 
-      {persons}
-    </div>
-  </StyleRoot>
+    {persons}
+  </div>
 }
 
-export default Radium(App)
+export default App
