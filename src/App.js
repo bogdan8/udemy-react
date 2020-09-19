@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
-import styled from 'styled-components'
 
-import './App.css'
+import classes from  './App.module.css'
 import Person from './Person/Person'
 
 const App = props => {
@@ -43,7 +42,8 @@ const App = props => {
     setShowPersonsState(!showPersonsState)
   }
 
-  let persons = null;
+  let persons  = null;
+  let btnClass = [];
 
   if (showPersonsState) {
     persons = <div>
@@ -59,22 +59,24 @@ const App = props => {
         })
       }
     </div>
+
+    btnClass = classes.Red
   }
 
-  const classes = []
+  const assignedClasses = []
 
   if (personsState.persons.length <= 2) {
-    classes.push('red')
+    assignedClasses.push(classes.red)
   }
 
   if (personsState.persons.length <= 1) {
-    classes.push('bold')
+    assignedClasses.push(classes.bold)
   }
 
-  return <div className="App">
+  return <div className={classes.App}>
     <h1>Hi, I'm a React App</h1>
-    <p className={classes.join(' ')}>This is really working!</p>
-    <button className='button' onClick={togglePersonsHandler}>Toggle Persons</button>
+    <p className={assignedClasses.join(' ')}>This is really working!</p>
+    <button className={btnClass} onClick={togglePersonsHandler}>Toggle Persons</button>
 
     {persons}
   </div>
