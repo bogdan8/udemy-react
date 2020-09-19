@@ -58,7 +58,7 @@ const App = props => {
         personsState.persons.map((person, index) => {
           return <Person
             key={person.id}
-            click={deletePersonHandler.bind(this)}
+            click={() => deletePersonHandler(index)}
             name={person.name}
             age={person.age}
             change={(event) => nameChangeHandler(event, person.id)}
@@ -70,7 +70,19 @@ const App = props => {
     style.backgroundColor = 'red'
   }
 
+  const classes = []
+
+  if (personsState.persons.length <= 2) {
+    classes.push('red')
+  }
+
+  if (personsState.persons.length <= 1) {
+    classes.push('bold')
+  }
+
   return <div className="App">
+    <h1>Hi, I'm a React App</h1>
+    <p className={classes.join(' ')}>This is really working!</p>
     <button style={style} onClick={togglePersonsHandler}>Toggle Persons</button>
 
     {persons}
