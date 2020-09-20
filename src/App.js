@@ -2,8 +2,10 @@ import React, { useState } from 'react'
 
 import classes from  './App.module.css'
 import Person from './Person/Person'
+import { ErrorBoundary } from 'react-error-boundary'
+import ErrorFallback from './ErrorFallback/ErrorFallback'
 
-const App = props => {
+const App = () => {
   const [personsState, setPersonsState] = useState({
     persons: [
       { id: 1, name: 'Max', age: 22 },
@@ -12,7 +14,6 @@ const App = props => {
     ]
   })
 
-  const [otherState, setOtherState] = useState('some other value')
   const [showPersonsState, setShowPersonsState] = useState(false)
 
   const nameChangeHandler = (event, id) => {
@@ -20,7 +21,7 @@ const App = props => {
       return person.id === id
     })
 
-    const person = {...personsState.persons[personIndex]}
+    const person = { ...personsState.persons[personIndex] }
 
     person.name = event.target.value
 
@@ -35,7 +36,7 @@ const App = props => {
     const persons = [...personsState.persons]
 
     persons.splice(personIndex, 1)
-    setPersonsState({persons: persons})
+    setPersonsState({ persons: persons })
   }
 
   const togglePersonsHandler = () => {
@@ -49,13 +50,15 @@ const App = props => {
     persons = <div>
       {
         personsState.persons.map((person, index) => {
-          return <Person
-            key={person.id}
-            click={() => deletePersonHandler(index)}
-            name={person.name}
-            age={person.age}
-            change={(event) => nameChangeHandler(event, person.id)}
-          />
+          return <ErrorBoundary FallbackComponent={ ErrorFallback }>
+            <Person
+              key={ person.id }
+              click={ () => deletePersonHandler(index) }
+              name={ person.name }
+              age={ person.age }
+              change={ (event) => nameChangeHandler(event, person.id) }
+            />
+          </ErrorBoundary>
         })
       }
     </div>
@@ -73,12 +76,12 @@ const App = props => {
     assignedClasses.push(classes.bold)
   }
 
-  return <div className={classes.App}>
+  return <div className={ classes.App }>
     <h1>Hi, I'm a React App</h1>
-    <p className={assignedClasses.join(' ')}>This is really working!</p>
-    <button className={btnClass} onClick={togglePersonsHandler}>Toggle Persons</button>
+    <p className={ assignedClasses.join(' ') }>This is really working!</p>
+    <button className={ btnClass } onClick={ togglePersonsHandler }>Toggle Persons</button>
 
-    {persons}
+    { persons }
   </div>
 }
 
