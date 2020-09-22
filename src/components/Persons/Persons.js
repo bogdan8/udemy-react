@@ -27,7 +27,6 @@ class Persons extends PureComponent {
   }
 
   // componentWillUpdate() {
-    
   // }
   
   componentDidUpdate(prevProps, prevState, snapshot) {
