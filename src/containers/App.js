@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import classes from './App.module.css'
 import Persons from '../components/Persons/Persons'
 import Cockpit from '../components/Cockpit/Cockpit'
-import WithClass from '../hoc/WithClass'
+import WithClass from '../hoc/withClass'
 
 class App extends Component {
   constructor(props) {
@@ -80,12 +80,12 @@ class App extends Component {
       persons = <Persons persons={ this.state.persons } clicked={ this.deletePersonHandler } changed={ this.nameChangeHandler } />
     }
 
-    return <WithClass classes={ classes.App }>
+    return <>
       <button onClick={ () => { this.setState({ showCockpit: false }) } } >Remove Cockpit</button>
       { this.state.showCockpit ? <Cockpit showPersons={ this.state.showPersons } personsLength={ this.state.persons.length } clicked={ this.togglePersonsHandler } /> : null }
       { persons }
-    </WithClass>
+    </>
   }
 }
 
-export default App
+export default WithClass(App, classes.App)
