@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import './Posts.module.css'
+import './Posts.css'
 import axios from '../../../axios'
 import Post from '../../../components/Post/Post'
 
