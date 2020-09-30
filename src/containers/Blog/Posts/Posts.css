@@ -5,3 +5,7 @@
   width: 80%;
   margin: auto;
 }
+
+.Posts a {
+  text-decoration: none;
+}
