@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
+import { Route, NavLink } from 'react-router-dom'
 
 import './Courses.css'
+import Course from '../Course/Course.js'
 
 class Courses extends Component {
   state = {
@@ -12,18 +14,19 @@ class Courses extends Component {
   }
 
   render () {
-    return (
-      <div>
-        <h1>Amazing Udemy Courses</h1>
-        <section className="Courses">
-          {
-            this.state.courses.map( course => {
-              return <article className="Course" key={course.id}>{course.title}</article>
-            } )
-          }
-        </section>
-      </div>
-    )
+    return <div>
+      <h1>Amazing Udemy Courses</h1>
+      <section className="Courses">
+        {
+          this.state.courses.map(course => {
+            return <NavLink to={ { pathname: this.props.match.url + '/' + course.id, search: '?title=' + course.title } } key={ course.id }>
+              <article className="Course">{course.title}</article>
+            </NavLink>
+          })
+        }
+      </section>
+      <Route path={ this.props.match.url + '/:id' } exact component={ Course } />
+    </div>
   }
 }
 
