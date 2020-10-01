@@ -85,7 +85,7 @@ class ContactData extends Component {
             { value: 'chipest', displayValue: 'Chipest' }
           ]
         },
-        value: '',
+        value: 'fastest',
         valid: true,
         validation: {}
       }
