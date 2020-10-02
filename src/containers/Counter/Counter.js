@@ -6,11 +6,6 @@ import CounterOutput from '../../components/CounterOutput/CounterOutput'
 import * as actionTypes from '../../store/actions'
 
 class Counter extends Component {
-  state = {
-    counter: 0,
-    results: []
-  }
-
   render () {
     return (
       <div>
