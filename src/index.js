@@ -13,7 +13,7 @@ const store = createStore(reducer)
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={ store, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() }>
+    <Provider store={ store }> { /* window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() }> */ }
       <BrowserRouter>
         <App />
       </BrowserRouter>
