@@ -12,17 +12,7 @@ import * as burgerBuilderActions from '../../store/actions/'
 
 class BurgerBuilder extends Component {
   state = {
-    purchasing: false,
-    loading: false,
-    error: false
-  }
-
-  componentDidMount () {
-    // axios.get('/ingredients.json').then(response => {
-    //   this.setState({ ingredients: response.data })
-    // }).catch(error => {
-    //   this.setState({ error: true })
-    // })
+    purchasing: false
   }
 
   updatePurchaseState (ingredients) {
@@ -55,10 +45,6 @@ class BurgerBuilder extends Component {
     }
 
     let orderSummary = null
-
-    if (this.state.loading) {
-      orderSummary = <Spinner />
-    }
 
     let burger = this.state.error ? <p>ingredients cannot be loaded!</p> : <Spinner />
 
