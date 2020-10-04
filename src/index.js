@@ -9,11 +9,11 @@ import App from './App'
 import * as serviceWorker from './serviceWorker'
 import reducer from './store/reducer'
 
-const store = createStore(reducer)
+const store = createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={ store }> { /* window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() }> */ }
+    <Provider store={ store }>
       <BrowserRouter>
         <App />
       </BrowserRouter>
