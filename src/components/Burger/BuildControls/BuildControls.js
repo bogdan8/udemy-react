@@ -23,7 +23,8 @@ const buildControls = (props) => <div className={ classes.BuildControls }>
       />
     )
   }
-  <button onClick={ props.ordered } className={ classes.OrderButton } disabled={ !props.purchaseable }>ORDER NOW</button>
+
+  <button onClick={ props.ordered } className={ classes.OrderButton } disabled={ !props.purchaseable }>{ props.isAuth ? 'Order now' : 'SignUp to order' }</button>
 </div>
 
 export default buildControls
