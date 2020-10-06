@@ -1,0 +1,12 @@
+{
+  "name": "udemy-webpack",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:bogdan8/udemy-react.git",
+  "author": "bogdan8 <bogdanlitvin8@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "webpack": "^4.44.2",
+    "webpack-dev-server": "^3.11.0"
+  }
+}
