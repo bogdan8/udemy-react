@@ -5,6 +5,7 @@
   "repository": "git@github.com:bogdan8/udemy-react.git",
   "author": "bogdan8 <bogdanlitvin8@gmail.com>",
   "license": "MIT",
+  "browserslist": "> 1%, last 2 versions",
   "scripts": {
     "start": "webpack-dev-server"
   },
@@ -14,8 +15,10 @@
     "@babel/preset-env": "^7.11.5",
     "@babel/preset-react": "^7.10.4",
     "@babel/preset-stage-2": "^7.8.3",
+    "autoprefixer": "^10.0.1",
     "babel": "^6.23.0",
     "babel-loader": "^8.1.0",
+    "postcss-loader": "^4.0.3",
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0"
