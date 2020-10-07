@@ -23,6 +23,10 @@ const Ingredients = () => {
     })  
   }, [])
 
+  useEffect(() => {
+    console.log('Rendering twice', ingredients)
+  }, [ingredients])
+
   const addIngredientHandler = ingredient => {
     fetch('https://react-hooks-update-1a385.firebaseio.com/ingredients.json', {
       method: 'POST',
