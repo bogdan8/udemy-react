@@ -20,7 +20,7 @@ const Ingredients = () => {
         })
       }
       setIngredients(loadedIngredients)
-    })  
+    })
   }, [])
 
   useEffect(() => {
@@ -39,6 +39,10 @@ const Ingredients = () => {
     })
   }
 
+  const filteredIngredientsHandler = filteredIngredients => {
+    setIngredients(filteredIngredients)
+  }
+
   const removeIngredientHandler = (ingId) => {
     setIngredients(prevIngredients => [ ...prevIngredients.filter( ingredient => ingredient.id !== ingId ) ])
   }
@@ -48,7 +52,7 @@ const Ingredients = () => {
       <IngredientForm onAddIngredient={ addIngredientHandler }/>
 
       <section>
-        <Search />
+        <Search onLoadIngredients={ filteredIngredientsHandler } />
         <IngredientList onRemoveItem={ removeIngredientHandler } ingredients={ ingredients } />
       </section>
     </div>
