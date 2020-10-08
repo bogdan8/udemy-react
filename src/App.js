@@ -1,4 +1,4 @@
-import React, { Component, Suspense } from 'react'
+import React, { useEffect, Suspense } from 'react'
 import { Route, Redirect, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 
@@ -19,35 +19,33 @@ const Auth = React.lazy(() => {
   return import('./containers/Auth/Auth')
 })
 
-class App extends Component {
-  componentDidMount () {
-    this.props.onTryAuthSignup()
-  }
+const App = props => {
+  useEffect(() => {
+    props.onTryAuthSignup()
+  }, [])
 
-  render () {
-    let routes = <>
-      <Route path='/auth' render={ () => <Auth /> } />
+  let routes = <>
+    <Route path='/auth' render={ () => <Auth /> } />
+    <Route path='/' exact component={ BurgerBuilder } />
+    <Redirect to='/' />
+  </>
+
+
+  if (props.isAuthenticated) {
+    routes = <>
+      <Route path='/checkout' render={ () => <Checkout /> } />
+      <Route path='/orders' render={ () => <Orders /> } />
+      <Route path='/logout' component={ Logout } />
       <Route path='/' exact component={ BurgerBuilder } />
       <Redirect to='/' />
     </>
-
-
-    if (this.props.isAuthenticated) {
-      routes = <>
-        <Route path='/checkout' render={ () => <Checkout /> } />
-        <Route path='/orders' render={ () => <Orders /> } />
-        <Route path='/logout' component={ Logout } />
-        <Route path='/' exact component={ BurgerBuilder } />
-        <Redirect to='/' />
-      </>
-    }
-
-    return <div>
-      <Layout>
-        <Suspense fallback={ <p>loading</p> }>{ routes }</Suspense>
-      </Layout>
-    </div>
   }
+
+  return <div>
+    <Layout>
+      <Suspense fallback={ <p>loading</p> }>{ routes }</Suspense>
+    </Layout>
+  </div>
 }
 
 const mapStateToProps = state => {
