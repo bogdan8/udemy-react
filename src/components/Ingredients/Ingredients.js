@@ -4,6 +4,7 @@ import IngredientForm from './IngredientForm'
 import IngredientList from './IngredientList'
 import ErrorModal from '../UI/ErrorModal'
 import Search from './Search'
+import useHttp from '../../hooks/http'
 
 const ingredientReducer = (currentIngredients, action) => {
   switch(action.type) {
@@ -18,24 +19,9 @@ const ingredientReducer = (currentIngredients, action) => {
   }
 }
 
-const httpReducer = (currentHttpState, action) => {
-  switch(action.type) {
-    case 'SEND':
-      return { loading: true, error: null }
-    case 'RESPONSE':
-      return { ...currentHttpState, loading: false }
-    case 'ERROR':
-      return { loading: false, error: action.errorMessage }
-    case 'CLEAR':
-      return { ...currentHttpState, error: null }
-    default:
-      throw new Error('Should not get there')
-  }
-}
-
 const Ingredients = () => {
   const [ ingredients, dispatch ] = useReducer(ingredientReducer, [])
-  const [ httpState, dispatchHttp ] = useReducer(httpReducer, { loading: false, error: null })
+  const { isLoading, error, data, sendRequest } = useHttp()
 
   // const [ ingredients, setIngredients ] = useState([])
   // const [ isLoading, setIsLoading ] = useState(false)
@@ -93,24 +79,8 @@ const Ingredients = () => {
   }, [])
 
   const removeIngredientHandler = useCallback(ingId => {
-    dispatchHttp({ type: 'SEND' })
-
-    fetch(`https://react-hooks-update-1a385.firebaseio.com/ingredients/${ingId}.json`, {
-      method: 'DELETE'
-    }).then(response => {
-      dispatchHttp({ type: 'RESPONSE' })
-      // setIngredients(prevIngredients => [ ...prevIngredients.filter( ingredient => ingredient.id !== ingId ) ])
-      dispatch({
-        type: 'DELETE',
-        id: ingId
-      })
-    }).catch(error => {
-      dispatchHttp({
-        type: 'ERROR',
-        errorMessage: error.message
-      })
-    })
-  }, [])
+    sendRequest(`https://react-hooks-update-1a385.firebaseio.com/ingredients/${ingId}`, 'DELETE')
+  }, [sendRequest])
 
   const clearError = () => {
     dispatchHttp({ type: 'CLEAR' })
@@ -122,8 +92,8 @@ const Ingredients = () => {
 
   return (
     <div className="App">
-      { httpState.error && <ErrorModal onClose={ clearError }>{ httpState.error }</ErrorModal> }
-      <IngredientForm onAddIngredient={ addIngredientHandler } loading={ httpState.loading } />
+      { error && <ErrorModal onClose={ clearError }>{ error }</ErrorModal> }
+      <IngredientForm onAddIngredient={ addIngredientHandler } loading={ loading } />
 
       <section>
         <Search onLoadIngredients={ filteredIngredientsHandler } />
