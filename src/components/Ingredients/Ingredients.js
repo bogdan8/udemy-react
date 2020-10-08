@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect, useCallback } from 'react'
+import React, { useReducer, useEffect, useCallback, useMemo } from 'react'
 
 import IngredientForm from './IngredientForm'
 import IngredientList from './IngredientList'
@@ -64,7 +64,7 @@ const Ingredients = () => {
     console.log('Rendering twice', ingredients)
   }, [ingredients])
 
-  const addIngredientHandler = ingredient => {
+  const addIngredientHandler = useCallback(ingredient => {
     dispatchHttp({ type: 'SEND' })
 
     fetch('https://react-hooks-update-1a385.firebaseio.com/ingredients.json', {
@@ -82,7 +82,7 @@ const Ingredients = () => {
         ingredient: { id: responseData.name, ...ingredient }
       })
     })
-  }
+  }, [])
 
   const filteredIngredientsHandler = useCallback(filteredIngredients => {
     // setIngredients(filteredIngredients)
@@ -92,7 +92,7 @@ const Ingredients = () => {
     })
   }, [])
 
-  const removeIngredientHandler = (ingId) => {
+  const removeIngredientHandler = useCallback(ingId => {
     dispatchHttp({ type: 'SEND' })
 
     fetch(`https://react-hooks-update-1a385.firebaseio.com/ingredients/${ingId}.json`, {
@@ -110,11 +110,15 @@ const Ingredients = () => {
         errorMessage: error.message
       })
     })
-  }
+  }, [])
 
   const clearError = () => {
     dispatchHttp({ type: 'CLEAR' })
   }
+
+  const ingredientList = useMemo(() => {
+    return <IngredientList onRemoveItem={ removeIngredientHandler } ingredients={ ingredients } />
+  }, [ingredients, removeIngredientHandler])
 
   return (
     <div className="App">
@@ -123,7 +127,7 @@ const Ingredients = () => {
 
       <section>
         <Search onLoadIngredients={ filteredIngredientsHandler } />
-        <IngredientList onRemoveItem={ removeIngredientHandler } ingredients={ ingredients } />
+        { ingredientList }
       </section>
     </div>
   )
