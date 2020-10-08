@@ -20,9 +20,11 @@ const Auth = React.lazy(() => {
 })
 
 const App = props => {
+  const { onTryAuthSignup } = props
+
   useEffect(() => {
-    props.onTryAuthSignup()
-  }, [])
+    onTryAuthSignup()
+  }, [onTryAuthSignup])
 
   let routes = <>
     <Route path='/auth' render={ (props) => <Auth { ...props } /> } />
