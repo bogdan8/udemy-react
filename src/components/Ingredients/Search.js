@@ -26,10 +26,11 @@ const Search = React.memo(props => {
           }
           onLoadIngredients(loadedIngredients)
         })
-
       }
-
-    }, 5000)
+    }, 500)
+    return () => {
+      clearTimeout(timer)
+    }
   }, [enteredFilter, onLoadIngredients, inputRef])
 
   return (
